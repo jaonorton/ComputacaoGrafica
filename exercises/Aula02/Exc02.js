@@ -1,12 +1,13 @@
 import * as THREE from  'three';
-import { OrbitControls } from '../build/jsm/controls/OrbitControls.js';
+import { OrbitControls } from '../../build/jsm/controls/OrbitControls.js';
 import {initRenderer, 
         initCamera,
         initDefaultBasicLight,
         setDefaultMaterial,
         InfoBox,
+        SecondaryBox,
         onWindowResize,
-        createGroundPlaneXZ} from "../libs/util/util.js";
+        createGroundPlaneXZ} from "../../libs/util/util.js";
 
 let scene, renderer, camera, material, light, orbit; // Initial variables
 scene = new THREE.Scene();    // Create main scene
@@ -27,30 +28,21 @@ scene.add( axesHelper );
 let plane = createGroundPlaneXZ(20, 20)
 scene.add(plane);
 
-// create a cube
-let cubeGeometry = new THREE.BoxGeometry(11, 0.3, 6);
-let cube = new THREE.Mesh(cubeGeometry, material);
-// position the cube
-cube.position.set(0.0, 3.0, 0.0);
-// add the cube to the scene
-scene.add(cube);
+const centerGeometry = new THREE.SphereGeometry( 0.0, 1, 1 );
+const center = new THREE.Mesh( centerGeometry, material );
+center.position.set(0.0, 0.0, 0.0);
+scene.add(center);
 
-const cylinderGeometry = new THREE.CylinderGeometry( 0.2, 0.2, 3, 32 ); 
-const cylinder2 = new THREE.Mesh( cylinderGeometry, material ); 
-cylinder2.position.set(-5.0, -1.5, 2.5);
-cube.add( cylinder2 );
+const sphereGeometry = new THREE.SphereGeometry( 0.5, 32, 32 );
+const sphere = new THREE.Mesh( sphereGeometry, material );
+sphere.position.set(7.0, -0.5, 0.0);
+center.add(sphere);
 
-const cylinder3 = new THREE.Mesh( cylinderGeometry, material ); 
-cylinder3.position.set(5.0, -1.5, -2.5);
-cube.add( cylinder3 );
+for(let i = 0; i<360; i = i +30){
+    let angle = THREE.MathUtils.degToRad(i);
+    center.rotateZ(angle);
+}
 
-const cylinder4 = new THREE.Mesh( cylinderGeometry, material ); 
-cylinder4.position.set(-5.0, -1.5, -2.5);
-cube.add( cylinder4 );
-
-const cylinder = new THREE.Mesh( cylinderGeometry, material ); 
-cylinder.position.set(5.0, -1.5, 2.5);
-cube.add( cylinder );
 
 // Use this to show information onscreen
 let controls = new InfoBox();
