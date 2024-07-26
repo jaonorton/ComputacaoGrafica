@@ -30,18 +30,24 @@ let geometry = new THREE.SphereGeometry( 0.2, 32, 16 );
 let material = new THREE.MeshPhongMaterial({color:"red", shininess:"200"});
 let obj = new THREE.Mesh(geometry, material);
   obj.castShadow = true;
-  obj.position.set(2, 0.2, 2);
+  obj.position.set(-4, 0.2, 3);
 scene.add(obj);
 
 let obj1 = new THREE.Mesh(geometry, material);
   obj1.castShadow = true;
-  obj1.position.set(-2, 0.2, -2);
+  obj1.position.set(-4, 0.2, -3);
 scene.add(obj1)
 
 // Variables that will be used for linear interpolation
 const lerpConfig = {
-  destination: new THREE.Vector3(0.0, 0.2, 0.0),
+  destination: new THREE.Vector3(4.0, 0.2, 3),
   alpha: 0.01,
+  move: true
+}
+
+const lerpConfig1 = {
+  destination: new THREE.Vector3(4.0, 0.2, -3),
+  alpha: 0.05,
   move: true
 }
 
@@ -50,23 +56,42 @@ render();
 
 function buildInterface()
 {     
+  var controls = new function () {
+    this.onReset = function () {
+       reset();
+    };
+    this.onEsfera = function () {
+      
+    };
+    this.onEsfera1 = function () {
+      
+    };
+ };
+
   let gui = new GUI();
-  let folder = gui.addFolder("Lerp Options");
-    folder.open();
-    folder.add(lerpConfig.destination, 'x', -5, 5).onChange();
-    folder.add(lerpConfig.destination, 'y', 0.1, 3).onChange();
-    folder.add(lerpConfig.destination, 'z', -5, 5).onChange();  
-    folder.add(lerpConfig, 'alpha', 0.01, 1).onChange();      
-    folder.add(lerpConfig, "move",  true)
-          .name("Move Object");
+  gui.add(lerpConfig, "move", true).name("Esfera 1")
+  gui.add(lerpConfig1, "move", true).name("Esfera 2")
+  gui.add(controls, `onReset`).name("Reset")
+
+}
+
+
+function reset(){
+  obj.position.set(-4, 0.2, 3);
+  obj1.position.set(-4, 0.2, -3);
+
 }
 
 function render()
 {
   trackballControls.update();
 
-  if(lerpConfig.move) obj.position.lerp(lerpConfig.destination, lerpConfig.alpha);
-
+  if(lerpConfig.move){
+    obj.position.lerp(lerpConfig.destination, lerpConfig.alpha);
+  }
+  if(lerpConfig1.move){
+    obj1.position.lerp(lerpConfig1.destination, lerpConfig1.alpha);
+  }
   requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene
 }
