@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import GUI from '../../libs/util/dat.gui.module.js'
-import {TrackballControls} from '../../build/jsm/controls/TrackballControls.js';
 import {initRenderer, 
         initDefaultSpotlight,
         initCamera,
@@ -11,7 +10,6 @@ let scene    = new THREE.Scene();    // Create main scene
 let renderer = initRenderer();    // View function in util/utils
 let light    = initDefaultSpotlight(scene, new THREE.Vector3(7.0, 7.0, 7.0), 300); 
 let camera   = initCamera(new THREE.Vector3(3.6, 4.6, 8.2)); // Init camera in this position
-let trackballControls = new TrackballControls(camera, renderer.domElement );
 
 // Show axes 
 let axesHelper = new THREE.AxesHelper( 5 );
@@ -38,18 +36,8 @@ let obj1 = new THREE.Mesh(geometry, material);
   obj1.position.set(-4, 0.2, -3);
 scene.add(obj1)
 
-// Variables that will be used for linear interpolation
-const lerpConfig = {
-  destination: new THREE.Vector3(4.0, 0.2, 3),
-  alpha: 0.01,
-  move: true
-}
-
-const lerpConfig1 = {
-  destination: new THREE.Vector3(4.0, 0.2, -3),
-  alpha: 0.05,
-  move: true
-}
+const targetPosition = new THREE.Vector3(4.0, 0.2, 3);
+const targetPosition1 = new THREE.Vector3(4.0, 0.2, -3);
 
 buildInterface();
 render();
@@ -61,37 +49,39 @@ function buildInterface()
        reset();
     };
     this.onEsfera = function () {
-      
+      moveSphere();
     };
     this.onEsfera1 = function () {
-      
+      moveSphere1();
     };
  };
 
   let gui = new GUI();
-  gui.add(lerpConfig, "move", true).name("Esfera 1")
-  gui.add(lerpConfig1, "move", true).name("Esfera 2")
+  gui.add(controls, `onEsfera`).name("Esfera 1")
+  gui.add(controls, `onEsfera1`).name("Esfera 2")
+
   gui.add(controls, `onReset`).name("Reset")
 
 }
 
+function moveSphere() {
+  obj.position.set(targetPosition.x, targetPosition.y, targetPosition.z);
+}
+
+function moveSphere1() {
+  obj1.position.set(targetPosition1.x, targetPosition1.y, targetPosition1.z);
+}
 
 function reset(){
   obj.position.set(-4, 0.2, 3);
   obj1.position.set(-4, 0.2, -3);
-
 }
 
 function render()
-{
-  trackballControls.update();
-
-  if(lerpConfig.move){
-    obj.position.lerp(lerpConfig.destination, lerpConfig.alpha);
-  }
-  if(lerpConfig1.move){
-    obj1.position.lerp(lerpConfig1.destination, lerpConfig1.alpha);
-  }
+{   
+  
   requestAnimationFrame(render);
   renderer.render(scene, camera) // Render scene
 }
+
+// sei que nao ta certo
