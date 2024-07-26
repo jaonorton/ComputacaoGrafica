@@ -57,11 +57,16 @@ cylinder2.position.set(1, 0.5, -2.0);
 cylinder2.castShadow = true;
 scene.add( cylinder2 );
 
-
 // let dirPosition = new THREE.Vector3(2, 2, 2);
 // const dirLight = new THREE.DirectionalLight('white', 0.2);
 // dirLight.position.copy(dirPosition);
 //  //mainLight.castShadow = true;
+
+// luz direcional
+// let dirPosition = new THREE.Vector3(0, 2, 1);
+// const dirLight = new THREE.DirectionalLight('white', 1.0);
+// dirLight.position.copy(dirPosition);
+// dirLight.castShadow = true;
 // scene.add(dirLight);  
 
 // Load default scene
@@ -80,6 +85,17 @@ let directionalLight = new THREE.DirectionalLight(directionalLightColor, 0.5);
   directionalLight.castShadow = true;
 directionalLight.target = cube;
 scene.add(directionalLight);
+
+// spot light
+let spotPosition = new THREE.Vector3(0, 2, 1);
+let spotColor = "rgb(255,255,255)";
+let spotLight = new THREE.SpotLight(spotColor, 1);
+spotLight.position.copy(spotPosition);
+spotLight.angle = THREE.MathUtils.degToRad(40);
+spotLight.castShadow = true;
+spotLight.target.position.set(0,0,1)
+scene.add(spotLight);
+
 
 
 //---------------------------------------------------------
