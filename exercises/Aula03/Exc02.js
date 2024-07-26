@@ -23,9 +23,9 @@ createTeapot( 2.0,  0.4,  0.0, Math.random() * 0xffffff);
 createTeapot(0.0,  0.4,  2.0, Math.random() * 0xffffff);  
 createTeapot(0.0,  0.4, -2.0, Math.random() * 0xffffff);    
 
-let camPos  = new THREE.Vector3(3, 4, 8);
+let camPos  = new THREE.Vector3(0.0, 0.5, 0.0);
 let camUp   = new THREE.Vector3(0.0, 1.0, 0.0);
-let camLook = new THREE.Vector3(0.0, 0.0, 0.0);
+let camLook = new THREE.Vector3(0.0, 0.5, -1.0);
 var message = new SecondaryBox("");
 
 // Main camera
@@ -33,6 +33,11 @@ camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight,
    camera.position.copy(camPos);
    camera.up.copy( camUp );
    camera.lookAt(camLook);
+
+let cameraHolder = new THREE.Object3D();
+   cameraHolder.add(camera);
+
+scene.add(cameraHolder);
 
 render();
 
@@ -50,30 +55,40 @@ function updateCamera()
 function keyboardUpdate() {
 
    keyboard.update();
+
+   let angle = THREE.MathUtils.degToRad(1); 
+
    
    // DICA: Insira aqui seu código para mover a câmera
    if ( keyboard.pressed("W") ) {
-      camLook.add(new THREE.Vector3(1,0,0));
-      }
-  
+      cameraHolder.translateZ(0.1);
+   }
    if ( keyboard.pressed("S") ) {
-      camLook.add(new THREE.Vector3(-1,0,0));
+      cameraHolder.translateZ(-0.1);
    }
-  
    if ( keyboard.pressed("A") ) {
-      camLook.add(new THREE.Vector3(0,0,1));
+      cameraHolder.translateX(0.1);
    }  
-  
    if ( keyboard.pressed("D") ) {
-      camLook.add(new THREE.Vector3(0,0,-1));
+      cameraHolder.translateX(-0.1);
    }
-
    if (keyboard.pressed("Q")){
-      camLook.add(new THREE.Vector3(0,-1,0));
+      cameraHolder.rotateZ(angle);
    } 
-   
    if (keyboard.pressed("E")){
-      camLook.add(new THREE.Vector3(0,1,0));
+      cameraHolder.rotateZ(-angle);
+   } 
+   if (keyboard.pressed("up")){
+      cameraHolder.rotateX(angle);
+   } 
+   if (keyboard.pressed("down")){
+      cameraHolder.rotateX(-angle);
+   } 
+   if (keyboard.pressed("left")){
+      cameraHolder.rotateY(angle);
+   } 
+   if (keyboard.pressed("right")){
+      cameraHolder.rotateY(-angle);
    } 
    
    updateCamera();
