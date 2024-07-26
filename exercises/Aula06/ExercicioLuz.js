@@ -18,7 +18,6 @@ camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight,
    camera.up.set( 0, 1, 0 );
 orbit = new OrbitControls( camera, renderer.domElement ); // Enable mouse rotation, pan, zoom etc.
 
-
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
@@ -58,6 +57,11 @@ cylinder2.position.set(1, 0.5, -2.0);
 cylinder2.castShadow = true;
 scene.add( cylinder2 );
 
+// let dirPosition = new THREE.Vector3(2, 2, 2);
+// const dirLight = new THREE.DirectionalLight('white', 0.2);
+// dirLight.position.copy(dirPosition);
+//  //mainLight.castShadow = true;
+
 // luz direcional
 // let dirPosition = new THREE.Vector3(0, 2, 1);
 // const dirLight = new THREE.DirectionalLight('white', 1.0);
@@ -72,6 +76,15 @@ loadLightPostScene(scene)
 let ambientLightColor = "rgb(80,80,80)";
 let ambientLight = new THREE.AmbientLight(ambientLightColor);
 scene.add( ambientLight );
+
+// luz direcional
+let positionDirectionalLight = new THREE.Vector3(1, 2, 0, );
+let directionalLightColor = "rgb(255,255,255)";
+let directionalLight = new THREE.DirectionalLight(directionalLightColor, 0.5);
+  directionalLight.position.copy(positionDirectionalLight);
+  directionalLight.castShadow = true;
+directionalLight.target = cube;
+scene.add(directionalLight);
 
 // spot light
 let spotPosition = new THREE.Vector3(0, 2, 1);
