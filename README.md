@@ -6,6 +6,11 @@ Este repositório foi criado para armazenar os exercícios realizados durante a 
 
 Os exercícios normalmente são feitos em sala. O trabalho foi realizado em outro repositório, já que era em grupo e foi feito juntamente de outros 2 alunos, o que eu copio pra cá é apenas a versão final de entrega.
 
+## Liguagens usadas
+
+Tudo foi feito usando JavaScript, usando a biblioteca do TRHEE.js.
+
+
 ## Instalação
 
 Só clonar o repositório que tudo já irá funcionar.
