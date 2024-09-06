@@ -28,13 +28,19 @@ scene.add( axesHelper );
 let loader = new THREE.TextureLoader();
 let geometry = new THREE.BoxGeometry(1, 1, 1);
 let cubeMaterials = [
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1), //x+
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1), //x-   Texture + color
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1), //y+
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1), //y-  Just a color
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1), //z+
-    setMaterial('../../assets/textures/tiles.jpg', 1, 1)  //z-
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333), //x+
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333), //x-   Texture + color
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333), //y+
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333), //y-  Just a color
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333), //z+
+    setMaterial('../../assets/textures/tiles.jpg', 0.333, 0.333)  //z-
 ];
+cubeMaterials[1].map.offset.x = 0.333;
+cubeMaterials[2].map.offset.x = 0.666;
+cubeMaterials[3].map.offset.y = 0.333;
+cubeMaterials[4].map.offset.y = 0.666;
+cubeMaterials[5].map.offset.y = 0.333;
+cubeMaterials[5].map.offset.x = 0.333;
 let cube = new THREE.Mesh(geometry, cubeMaterials);
 scene.add(cube);
 
