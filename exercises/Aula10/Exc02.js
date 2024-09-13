@@ -36,7 +36,7 @@ let geom = new THREE.SphereGeometry(3, 64, 64);
 let colormap = 	new THREE.TextureLoader().load("../../assets/textures/displacement/rockWall.jpg");
     colormap.colorSpace = THREE.SRGBColorSpace;
 let normalmap = new THREE.TextureLoader().load("../../assets/textures/displacement/rockWall_Normal.jpg");
-let dispmap = 	new THREE.TextureLoader().load("../../assets/textures/displacement/rockWall_Height.png");
+let dispmap = 	new THREE.TextureLoader().load("../../assets/textures/displacement/rockWall_Height.jpg");
 
 let mat = new THREE.MeshStandardMaterial({
 	side: THREE.DoubleSide,
